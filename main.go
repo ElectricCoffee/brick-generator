@@ -28,13 +28,13 @@ func main() {
 	inputFile, readErr := ioutil.ReadFile(inputFileName)
 
 	if readErr != nil {
-		// add code
+		panic(readErr)
 	}
 
 	jsErr := json.Unmarshal(inputFile, &parsedData)
 
 	if jsErr != nil {
-		// add code
+		panic(readErr)
 	}
 	
 	var in, out InputData
