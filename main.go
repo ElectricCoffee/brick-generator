@@ -1,6 +1,6 @@
 package main
 
-import (
+import (			// comments there for personal reminder
 	"os"			// imports command-line args
 	"fmt"			// imports Printf and cousins
 	"encoding/json"		// imports JSON utilities
@@ -33,6 +33,7 @@ func main() {
 		panic(readErr)
 	}
 
+	// Extracts JSON data into the variable parsedData
 	jsErr := json.Unmarshal(inputFile, &parsedData)
 
 	if jsErr != nil {
