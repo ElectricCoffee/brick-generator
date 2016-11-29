@@ -14,6 +14,20 @@ type InputData struct {
 	Amount  uint     `json:"amount"`
 }
 
+func DataFromFile(fileName string) (InputData, error) {
+	var parsedData InputData
+	inputFile, readErr := ioutil.ReadFile(FileName)
+
+	if readErr != nil {
+		return parsedData, readErr
+	}
+
+	// Extracts JSON data into the variable parsedData
+	jsErr := json.Unmarshal(inputFile, &parsedData)
+
+	return parsedData, jsErr
+}
+
 type Brick struct {
 	Colour uint
 	Size uint
@@ -29,7 +43,6 @@ func (b Brick) String() string {
 
 func main() {
 	var inputFileName, outputFileName string
-	var parsedData InputData
 	var colours []uint
 
 	arguments := os.Args[1:] // arguments without program name
@@ -40,14 +53,7 @@ func main() {
 
 	inputFileName = arguments[0] // The JSON file we need to read
 
-	inputFile, readErr := ioutil.ReadFile(inputFileName)
-
-	if readErr != nil {
-		panic(readErr)
-	}
-
-	// Extracts JSON data into the variable parsedData
-	jsErr := json.Unmarshal(inputFile, &parsedData)
+	parsedData, jsErr := DataFromFile(inputFileName)
 
 	if jsErr != nil {
 		panic(readErr)
