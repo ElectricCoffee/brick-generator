@@ -14,6 +14,10 @@ type InputData struct {
 	Amount  uint     `json:"amount"`
 }
 
+func NewBrick(colour, length uint) Brick {
+	return Brick{colour, length}
+}
+
 func (b Brick) String() string {
 	return fmt.Sprintf("COL:%d LEN:%d\n", b.Colour, b.Size)
 }
