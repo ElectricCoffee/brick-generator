@@ -10,8 +10,8 @@ import (			// comments there for personal reminder
 
 type InputData struct {
 	Colours []string `json:"colors"`
-	Sizes   []int    `json:"sizes"`
-	Amount  int      `json:"amount"`
+	Sizes   []uint   `json:"sizes"`
+	Amount  uint     `json:"amount"`
 }
 
 func main() {
