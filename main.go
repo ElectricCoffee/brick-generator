@@ -6,7 +6,20 @@ import (			// comments there for personal reminder
 	"strconv"		// handles string conversion
 )
 
-
+func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
+	// Populate the uint array colours with the converted values
+	for _, hex := range colourHexes {
+		colour, convErr := strconv.ParseUint(hex, 0, 32)
+		
+		if convErr != nil {
+			return convErr
+		}
+		
+		// ParseUint returns a uint64, we need a 32, hence casting
+		*colourInts = append(*colourInts, uint(colour))
+	}
+	return nil
+}
 
 func main() {
 	var inputFileName, outputFileName string
@@ -23,19 +36,12 @@ func main() {
 	parsedData, jsErr := DataFromFile(inputFileName)
 
 	if jsErr != nil {
-		panic(readErr)
+		panic(jsErr)
 	}
 
-	// Populate the uint array colours with the converted values
-	for _, value := range parsedData.Colours {
-		colour, convErr := strconv.ParseUint(value, 0, 32)
-		if convErr != nil {
-			panic(convErr)
-		}
-		
-		// ParseUint returns a uint64, we need a 32, hence casting
-		colours = append(colours, uint(colour))
-	}
+	convErr := ConvertToIntegers(parsedData.Colours, &colours)
+
+	
 	
 	var in, out InputData
 	var b []byte
