@@ -14,6 +14,11 @@ type InputData struct {
 	Amount  uint     `json:"amount"`
 }
 
+type Brick struct {
+	Colour uint
+	Size uint
+}
+
 func NewBrick(colour, length uint) Brick {
 	return Brick{colour, length}
 }
