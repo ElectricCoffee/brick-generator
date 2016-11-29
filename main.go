@@ -39,6 +39,16 @@ func GenerateColours(number uint) []uint {
 	return result
 }
 
+func GenerateLengths(number uint) [] uint {
+	var result []uint
+	for i := 0; i < number; i++ {
+		length := uint(rand.Intn(200))
+		result = append(result, length)
+	}
+
+	return result
+}
+
 func main() {
 	rand.Seed(time.Now().Unix())
 	var inputFileName, outputFileName string
