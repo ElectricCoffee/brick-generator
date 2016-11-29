@@ -4,6 +4,13 @@ import (			// comments there for personal reminder
 	"os"			// imports command-line args
 	"fmt"			// imports Printf and cousins
 	"strconv"		// handles string conversion
+	"math/rand"
+	"time"
+)
+
+const (
+	Black = 0x000000
+	White = 0xFFFFFF
 )
 
 func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
@@ -21,7 +28,12 @@ func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
 	return nil
 }
 
+func GenerateRandomColour() uint {
+	return uint(rand.Intn(White)) // generate between 0 and FFFFFF
+}
+
 func main() {
+	rand.Seed(time.Now().Unix())
 	var inputFileName, outputFileName string
 	var colours []uint
 
