@@ -28,8 +28,15 @@ func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
 	return nil
 }
 
-func GenerateRandomColour() uint {
-	return uint(rand.Intn(White)) // generate between 0 and FFFFFF
+func GenerateColours(number uint) []uint {
+	var result []uint
+	for i := 0; i < number; i++ {
+		// generate between 0 and FFFFFF
+		colour := uint(rand.Intn(White))
+		result = append(result, colour)
+	}
+
+	return result
 }
 
 func main() {
