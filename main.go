@@ -5,6 +5,7 @@ import (
 	"fmt"			// imports Printf and cousins
 	"encoding/json"		// imports JSON utilities
 	"io/ioutil"		// imports file utilities
+	"strconv"		// handles string conversion
 )
 
 type InputData struct {
@@ -16,6 +17,7 @@ type InputData struct {
 func main() {
 	var inputFileName, outputFileName string
 	var parsedData InputData
+	var colours []uint
 
 	arguments := os.Args[1:] // arguments without program name
 
@@ -35,6 +37,17 @@ func main() {
 
 	if jsErr != nil {
 		panic(readErr)
+	}
+
+	// Populate the uint array colours with the converted values
+	for _, value := range parsedData.Colours {
+		colour, convErr := strconv.ParseUint(value, 0, 32)
+		if convErr != nil {
+			panic(convErr)
+		}
+		
+		// ParseUint returns a uint64, we need a 32, hence casting
+		colours = append(colours, uint(colour))
 	}
 	
 	var in, out InputData
