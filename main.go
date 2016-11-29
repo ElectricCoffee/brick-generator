@@ -14,6 +14,10 @@ type InputData struct {
 	Amount  uint     `json:"amount"`
 }
 
+func (b Brick) String() string {
+	return fmt.Sprintf("COL:%d LEN:%d\n", b.Colour, b.Size)
+}
+
 func main() {
 	var inputFileName, outputFileName string
 	var parsedData InputData
