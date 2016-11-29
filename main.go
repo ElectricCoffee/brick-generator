@@ -8,9 +8,9 @@ import (
 )
 
 type InputData struct {
-	Colors []string `json:"colors"`
-	Sizes  []int    `json:"sizes"`
-	Amount int      `json:"amount"`
+	Colours []string `json:"colors"`
+	Sizes   []int    `json:"sizes"`
+	Amount  int      `json:"amount"`
 }
 
 func main() {
