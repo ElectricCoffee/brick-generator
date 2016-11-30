@@ -11,16 +11,6 @@ import (			// comments there for personal reminder
 	"errors"
 )
 
-// Constant values for the colours black and white
-const (
-	Black = 0x000000
-	White = 0xFFFFFF
-)
-
-// BrickLengths uses the index as the length of a brick in studs,
-// the numbers are the average lengths of the bricks as measured by the machine
-var BrickLengths = [9]uint{0, 0, 3524, 5254, 6904, 8198, 10352, 12982, 14204}
-
 // crash first prints the error, then causes the program to panic.
 // panic doesn't print the error message (apparently),
 // so a println is used in conjunction with panic to
