@@ -4,6 +4,7 @@ import (			// comments there for personal reminder
 	"os"			// imports command-line args
 	"fmt"			// imports Printf and cousins
 	"strconv"		// handles string conversion
+	"math"
 	"math/rand"
 	"time"
 )
@@ -68,6 +69,55 @@ func GenerateLengths(number uint) [] uint {
 	}
 
 	return result
+}
+
+// GenerateDataSet creates a sequence of bricks based on the input slices.
+// If either colours or lengths are empty, random values will be provided.
+func GenerateDataSet(colours, lengths []uint, number uint) []Brick {
+	var bricks []Brick
+	// var cardinality uint
+	fmt.Println (
+		"length of colours", len(colours),
+		"length of lengths", len(lengths),
+	)
+	noColours := len(colours) == 0
+	noLengths := len(lengths) == 0
+
+	calcSize := func (slice []uint) uint {
+		return number / uint(len(slice))
+	}
+
+	if noColours && !noLengths {
+		colCard := calcSize(lengths)
+		colours  = GenerateColours(colCard)
+	} else if !noColours && noLengths {
+		sizCard := calcSize(colours)
+		lengths  = GenerateLengths(sizCard)
+	} else if noColours && noLengths {
+		// if neither colours nor lengths are present,
+		// generate the root number of each
+		cardinality := uint(math.Sqrt(float64(number)))
+		colours  = GenerateColours(cardinality)
+		lengths  = GenerateLengths(cardinality)
+	}
+	
+	// generate cartesian product of colours and lengths
+	for _, colour := range colours {
+		for _, size := range lengths {
+			bricks = append(bricks, NewBrick(colour, size))
+		}
+	}
+
+	// TODO: Find a way to scale the array of brick,
+	// so it fits with the number variable
+
+	// Shuffle the slice of bricks so there's some randomness to it
+	for i := range bricks {
+		j := rand.Intn(i + 1)
+		bricks[i], bricks[j] = bricks[j], bricks[i]
+	}
+	
+	return bricks
 }
 
 func main() {
