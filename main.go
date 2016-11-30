@@ -14,6 +14,14 @@ const (
 )
 
 func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
+// crash first prints the error, then causes the program to panic.
+// panic doesn't print the error message (apparently),
+// so a println is used in conjunction with panic to
+// achieve the desired functionality
+func crash(err error) {
+	fmt.Println(err)
+	panic(err)
+}
 	// Populate the uint array colours with the converted values
 	for _, hex := range colourHexes {
 		colour, convErr := strconv.ParseUint(hex, 0, 32)
@@ -65,11 +73,14 @@ func main() {
 	parsedData, jsErr := DataFromFile(inputFileName)
 
 	if jsErr != nil {
-		panic(jsErr)
+		crash(jsErr)
 	}
 
 	convErr := ConvertToIntegers(parsedData.Colours, &colours)
 
+	if convErr != nil {
+		crash(convErr)
+	}
 	
 	
 	var in, out InputData
