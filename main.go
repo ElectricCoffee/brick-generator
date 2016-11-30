@@ -14,6 +14,10 @@ const (
 )
 
 func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
+// BrickLengths uses the index as the length of a brick in studs,
+// the numbers are the average lengths of the bricks as measured by the machine
+var BrickLengths = [9]uint{0, 0, 3524, 5254, 6904, 8198, 10352, 12982, 14204}
+
 // crash first prints the error, then causes the program to panic.
 // panic doesn't print the error message (apparently),
 // so a println is used in conjunction with panic to
@@ -47,11 +51,13 @@ func GenerateColours(number uint) []uint {
 	return result
 }
 
+// GenerateLengths generates a sequence of pseudorandom entries from the
+// BrickLengths array
 func GenerateLengths(number uint) [] uint {
 	var result []uint
-	for i := 0; i < number; i++ {
-		length := uint(rand.Intn(200))
-		result = append(result, length)
+	for i := uint(0); i < number; i++ {
+		l := uint(rand.Intn(8) + 1)
+		result = append(result, BrickLengths[l])
 	}
 
 	return result
