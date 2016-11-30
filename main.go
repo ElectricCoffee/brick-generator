@@ -71,6 +71,34 @@ func GenerateLengths(number uint) []uint {
 	return result
 }
 
+func ScaleBrickSlice(brksPtr *[]Brick, maxLen uint) {
+	fmt.Println("Scaling bricks slice")
+	brickLen := uint(len(*brksPtr))
+
+	if brickLen > maxLen {
+		fmt.Println("The length is longer")
+		// if the size of the brksPtr slice is longer than maxlen
+		// then scale it down
+		*brksPtr = append([]Brick(nil), (*brksPtr)[:maxLen]...)
+	} else if brickLen < maxLen {
+		lengthDifference := maxLen - brickLen
+		fmt.Println("difference is", lengthDifference)
+		if brickLen < maxLen / uint(2) {
+			fmt.Println("Length is shorter than half")
+			// if it's shorter, check if it's shorter than half the length
+			// append the array to itself, and call the function again
+			*brksPtr = append(*brksPtr, *brksPtr...)
+			ScaleBrickSlice(brksPtr, maxLen)
+		} else {
+			fmt.Println("Length is longer than half")
+			// if it isn't, append the difference from itself and return
+			appendValue := make([]Brick, lengthDifference)
+			copy(appendValue, (*brksPtr)[:lengthDifference])
+			*brksPtr = append(*brksPtr, appendValue...)
+		}
+	} // else do nothing
+}
+
 // GenerateDataSet creates a sequence of bricks based on the input slices.
 // If either colours or lengths are empty, random values will be provided.
 func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
@@ -109,15 +137,14 @@ func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
 		}
 	}
 
-	// TODO: Find a way to scale the array of brick,
-	// so it fits with the number variable
-
 	// Shuffle the slice of bricks so there's some randomness to it
 	for i := range bricks {
 		j := rand.Intn(i + 1)
 		bricks[i], bricks[j] = bricks[j], bricks[i]
 	}
-	
+
+	ScaleBrickSlice(&bricks, maxNum)
+		
 	return bricks
 }
 
