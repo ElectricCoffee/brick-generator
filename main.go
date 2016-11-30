@@ -8,12 +8,12 @@ import (			// comments there for personal reminder
 	"time"
 )
 
+// Constant values for the colours black and white
 const (
 	Black = 0x000000
 	White = 0xFFFFFF
 )
 
-func ConvertToIntegers(colourHexes []string, colourInts *[]uint) error {
 // BrickLengths uses the index as the length of a brick in studs,
 // the numbers are the average lengths of the bricks as measured by the machine
 var BrickLengths = [9]uint{0, 0, 3524, 5254, 6904, 8198, 10352, 12982, 14204}
@@ -26,9 +26,14 @@ func crash(err error) {
 	fmt.Println(err)
 	panic(err)
 }
+
+// ConvertToIntegers takes a slice of numeric strings
+// and converts it to a slice of integers.
+// It returns an error if a conversion wasn't successful
+func ConvertToIntegers(numStrs []string, colourInts *[]uint) error {
 	// Populate the uint array colours with the converted values
-	for _, hex := range colourHexes {
-		colour, convErr := strconv.ParseUint(hex, 0, 32)
+	for _, str := range numStrs {
+		colour, convErr := strconv.ParseUint(str, 0, 32)
 		
 		if convErr != nil {
 			return convErr
