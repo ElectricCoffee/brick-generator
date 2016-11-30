@@ -7,6 +7,9 @@ import (			// comments there for personal reminder
 	"math"
 	"math/rand"
 	"time"
+	"path/filepath"
+	"strings"
+	"errors"
 )
 
 // Constant values for the colours black and white
@@ -151,15 +154,23 @@ func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
 func main() {
 	rand.Seed(time.Now().Unix())
 	var inputFileName, outputFileName string
-	var colours []uint
-
+	var colours, sizes []uint
+	
 	arguments := os.Args[1:] // arguments without program name
 
 	if len(arguments) < 1 {
-		panic("Please supply a generator file")
+		crash(errors.New("Please supply a generator file"))
 	}
 
 	inputFileName = arguments[0] // The JSON file we need to read
+
+	fileExt := filepath.Ext(inputFileName)
+
+	if strings.Compare(fileExt, ".json") != 0 {
+		crash(errors.New("Please make sure the supplied file is a .json file"))
+	}
+
+	outputFileName = fmt.Sprint(strings.TrimSuffix(inputFileName, fileExt), ".brk")
 
 	parsedData, jsErr := DataFromFile(inputFileName)
 
@@ -169,33 +180,15 @@ func main() {
 
 	convErr := ConvertToIntegers(parsedData.Colours, &colours)
 
+	for _, e := range parsedData.Sizes {
+		sizes = append(sizes, BrickLengths[e])
+	}
+
 	if convErr != nil {
 		crash(convErr)
 	}
-	
-	
-	var in, out InputData
-	var b []byte
-	
-	in = InputData {
-		Colors: []string{"0xFF0000", "0x00FF00", "0x0000FF"},
-		Sizes: []int{50, 100, 150},
-		Amount: 500,
-	}
 
-	b, err = json.Marshal(in)
-	
-	if err != nil {
-		fmt.Println(err)
-	}
+	bricks := GenerateDataSet(colours, sizes, parsedData.Amount)
 
-	fmt.Println(string(b))
-	
-	err = json.Unmarshal(b, &out)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	
-	fmt.Println(out)
+	FWriteDataSet(outputFileName, bricks)
 }
