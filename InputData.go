@@ -12,15 +12,20 @@ type InputData struct {
 }
 
 func DataFromFile(fileName string) (InputData, error) {
-	var parsedData InputData
 	inputFile, readErr := ioutil.ReadFile(fileName)
 
 	if readErr != nil {
-		return parsedData, readErr
+		return InputData{}, readErr
 	}
 
 	// Extracts JSON data into the variable parsedData
-	jsErr := json.Unmarshal(inputFile, &parsedData)
+
+	return DataFromJSON(inputFile)
+}
+
+func DataFromJSON(jsonStr []byte) (InputData, error) {
+	var parsedData InputData
+	jsErr := json.Unmarshal(jsonStr, &parsedData)
 
 	return parsedData, jsErr
 }
