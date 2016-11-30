@@ -1,1 +1,5 @@
-*~
+# ignore all
+*
+
+# unignore specific files
+!*.go
