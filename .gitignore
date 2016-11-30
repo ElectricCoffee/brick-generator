@@ -3,3 +3,7 @@
 
 # unignore specific files
 !*.go
+!*.md
+!*.json
+!Makefile
+!LICENCE
