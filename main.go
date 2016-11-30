@@ -4,7 +4,6 @@ import (			// comments there for personal reminder
 	"os"			// imports command-line args
 	"fmt"			// imports Printf and cousins
 	"strconv"		// handles string conversion
-	"math"
 	"math/rand"
 	"time"
 	"path/filepath"
@@ -47,108 +46,6 @@ func ConvertToIntegers(numStrs []string, colourInts *[]uint) error {
 		*colourInts = append(*colourInts, uint(colour))
 	}
 	return nil
-}
-
-// GenerateColours generates a sequence of pseudorandom colours between
-// black #000000, and white #FFFFFF.
-func GenerateColours(number uint) []uint {
-	var result []uint
-	for i := uint(0); i < number; i++ {
-		// generate between 0 and FFFFFF
-		colour := uint(rand.Intn(White + 1))
-		result = append(result, colour)
-	}
-
-	return result
-}
-
-// GenerateLengths generates a sequence of pseudorandom entries from the
-// BrickLengths array
-func GenerateLengths(number uint) []uint {
-	var result []uint
-	for i := uint(0); i < number; i++ {
-		l := uint(rand.Intn(8) + 1)
-		result = append(result, BrickLengths[l])
-	}
-
-	return result
-}
-
-func ScaleBrickSlice(brksPtr *[]Brick, maxLen uint) {
-	fmt.Println("Scaling bricks slice")
-	brickLen := uint(len(*brksPtr))
-
-	if brickLen > maxLen {
-		fmt.Println("The length is longer")
-		// if the size of the brksPtr slice is longer than maxlen
-		// then scale it down
-		*brksPtr = append([]Brick(nil), (*brksPtr)[:maxLen]...)
-	} else if brickLen < maxLen {
-		lengthDifference := maxLen - brickLen
-		fmt.Println("difference is", lengthDifference)
-		if brickLen < maxLen / uint(2) {
-			fmt.Println("Length is shorter than half")
-			// if it's shorter, check if it's shorter than half the length
-			// append the array to itself, and call the function again
-			*brksPtr = append(*brksPtr, *brksPtr...)
-			ScaleBrickSlice(brksPtr, maxLen)
-		} else {
-			fmt.Println("Length is longer than half")
-			// if it isn't, append the difference from itself and return
-			appendValue := make([]Brick, lengthDifference)
-			copy(appendValue, (*brksPtr)[:lengthDifference])
-			*brksPtr = append(*brksPtr, appendValue...)
-		}
-	} // else do nothing
-}
-
-// GenerateDataSet creates a sequence of bricks based on the input slices.
-// If either colours or lengths are empty, random values will be provided.
-func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
-	var bricks []Brick
-	// var cardinality uint
-	fmt.Println (
-		"length of colours", len(colours),
-		"length of lengths", len(lengths),
-		"required bricks", maxNum,
-	)
-	noColours := len(colours) == 0
-	noLengths := len(lengths) == 0
-
-	calcSize := func (slice []uint) uint {
-		return maxNum / uint(len(slice))
-	}
-
-	if noColours && !noLengths {
-		colCard := calcSize(lengths)
-		colours  = GenerateColours(colCard)
-	} else if !noColours && noLengths {
-		sizCard := calcSize(colours)
-		lengths  = GenerateLengths(sizCard)
-	} else if noColours && noLengths {
-		// if neither colours nor lengths are present,
-		// generate the root maxNum of each
-		cardinality := uint(math.Sqrt(float64(maxNum)))
-		colours  = GenerateColours(cardinality)
-		lengths  = GenerateLengths(cardinality)
-	}
-	
-	// generate cartesian product of colours and lengths
-	for _, colour := range colours {
-		for _, size := range lengths {
-			bricks = append(bricks, NewBrick(colour, size))
-		}
-	}
-
-	// Shuffle the slice of bricks so there's some randomness to it
-	for i := range bricks {
-		j := rand.Intn(i + 1)
-		bricks[i], bricks[j] = bricks[j], bricks[i]
-	}
-
-	ScaleBrickSlice(&bricks, maxNum)
-		
-	return bricks
 }
 
 func main() {
