@@ -2,6 +2,20 @@
 
 The Brick Dataset Generator is a program designed to ease up the making of test-data for the [LEGO brick sorting machine](https://github.com/ElectricCoffee/SW5-Sorting) which was made in conjunction with a 5th semester university project at Aalborg University.
 
+## Files & Their Contents
+This program is split into a variety of files, some less obvious than others.
+
+### brick.go
+This file contains the `Brick` struct, and related functions.
+### input-data.go
+This file contains the `InputData` struct, and related functions.
+### data-generation.go
+This file contains functions responsible for generating the output data.
+### utility-functions.go
+This file contains various data conversion and convenience functions that don't really belong in the other files.
+### main.go
+Just has the `main` function.
+
 # Background
 As a group, we decided on using a simple interchange format for use in our embedded system that looks like this:
 
