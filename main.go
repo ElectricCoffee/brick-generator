@@ -61,7 +61,7 @@ func GenerateColours(number uint) []uint {
 
 // GenerateLengths generates a sequence of pseudorandom entries from the
 // BrickLengths array
-func GenerateLengths(number uint) [] uint {
+func GenerateLengths(number uint) []uint {
 	var result []uint
 	for i := uint(0); i < number; i++ {
 		l := uint(rand.Intn(8) + 1)
@@ -73,18 +73,19 @@ func GenerateLengths(number uint) [] uint {
 
 // GenerateDataSet creates a sequence of bricks based on the input slices.
 // If either colours or lengths are empty, random values will be provided.
-func GenerateDataSet(colours, lengths []uint, number uint) []Brick {
+func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
 	var bricks []Brick
 	// var cardinality uint
 	fmt.Println (
 		"length of colours", len(colours),
 		"length of lengths", len(lengths),
+		"required bricks", maxNum,
 	)
 	noColours := len(colours) == 0
 	noLengths := len(lengths) == 0
 
 	calcSize := func (slice []uint) uint {
-		return number / uint(len(slice))
+		return maxNum / uint(len(slice))
 	}
 
 	if noColours && !noLengths {
@@ -95,8 +96,8 @@ func GenerateDataSet(colours, lengths []uint, number uint) []Brick {
 		lengths  = GenerateLengths(sizCard)
 	} else if noColours && noLengths {
 		// if neither colours nor lengths are present,
-		// generate the root number of each
-		cardinality := uint(math.Sqrt(float64(number)))
+		// generate the root maxNum of each
+		cardinality := uint(math.Sqrt(float64(maxNum)))
 		colours  = GenerateColours(cardinality)
 		lengths  = GenerateLengths(cardinality)
 	}
