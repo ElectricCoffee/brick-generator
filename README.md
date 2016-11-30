@@ -49,5 +49,15 @@ If sizes or colors aren't supplied (or left empty), the generator will generate 
 
 An example of an input file is supplied as part of this repo as "test-data.json".
 
+# Build Instructions
+Make sure you have the Go programming language installed (instructions [here](https://golang.org/doc/install)).
+
+`cd` into the directory containing these files, and run `go build`. This will compile all the files into an executable file with the same name as the folder it was built in. See [build docs](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) for more detailed instructions.
+
+# Usage Instructions
+Simply run the executable like this: `./brick-generator generator.json` Where `generator.json` is a generator file (with a name of your choosing ending in .json)
+
+**Note:** if you named the executable something else when building, use that name instead of `brick-generator`.
+
 # Licence
 This software is released under an MIT Licence.
