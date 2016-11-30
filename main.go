@@ -4,7 +4,7 @@ import (			// comments there for personal reminder
 	"os"			// imports command-line args
 	"math/rand"
 	"time"
-	"errors"
+	"fmt"
 )
 
 func main() {
@@ -16,7 +16,8 @@ func main() {
 	arguments := os.Args[1:] // arguments without program name
 
 	if len(arguments) < 1 {
-		crash(errors.New("Please supply a generator file"))
+		fmt.Println("Please supply a generator file.")
+		return
 	}
 
 	inputFileName = arguments[0] // The JSON file we need to read
