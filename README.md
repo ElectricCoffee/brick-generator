@@ -23,9 +23,9 @@ As a group, we decided on using a simple interchange format for use in our embed
 COL:<32-bit integer value> LEN:<integer-value>\n
 ```
 
-The COL value is a representation of what a hexadecimal colour-value would be, had it been written as a decimal value. As an example the colour \#FF00CC would be 16711884
+The COL value is a representation of what a hexadecimal colour-value would be, had it been written as a decimal value. As an example the colour \#FF00CC would be 16711884.
 
-The LEN value is the length of a LEGO-brick in the amount of milliseconds it takes the brick to pass in front of a photointerrupter on the machine's conveyor belt (super weird I know)
+The LEN value is the length of a LEGO-brick in the amount of milliseconds it takes the brick to pass in front of a photointerrupter on the machine's conveyor belt (super weird, I know).
 
 So to reliably generate a large amount of bricks, an automated solution was necessary.
 
