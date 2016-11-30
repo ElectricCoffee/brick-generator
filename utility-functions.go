@@ -1,3 +1,5 @@
+// utility-functions.go contains various functions that deal with rudimentary
+// conversion and convenience functions
 package main
 
 import (

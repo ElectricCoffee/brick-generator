@@ -1,3 +1,5 @@
+// data-generation.go contains the functions responsible for generating the output data.
+// This includes generating the randomised data when it's needed
 package main
 
 import (

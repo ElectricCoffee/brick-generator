@@ -1,3 +1,4 @@
+// input-data.go contains functions related to the InputData struct, and JSON parsing
 package main
 
 import (

@@ -1,3 +1,4 @@
+// brick.go contains functions related to the Brick struct
 package main
 
 import (
