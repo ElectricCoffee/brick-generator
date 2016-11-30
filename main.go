@@ -40,11 +40,13 @@ func crash(err error) {
 	return nil
 }
 
+// GenerateColours generates a sequence of pseudorandom colours between
+// black #000000, and white #FFFFFF.
 func GenerateColours(number uint) []uint {
 	var result []uint
-	for i := 0; i < number; i++ {
+	for i := uint(0); i < number; i++ {
 		// generate between 0 and FFFFFF
-		colour := uint(rand.Intn(White))
+		colour := uint(rand.Intn(White + 1))
 		result = append(result, colour)
 	}
 
