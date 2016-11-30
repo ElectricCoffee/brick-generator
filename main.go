@@ -2,17 +2,15 @@ package main
 
 import (			// comments there for personal reminder
 	"os"			// imports command-line args
-	"fmt"			// imports Printf and cousins
 	"math/rand"
 	"time"
-	"path/filepath"
-	"strings"
 	"errors"
 )
 
 func main() {
 	rand.Seed(time.Now().Unix())
 	var inputFileName, outputFileName string
+	var err error
 	var colours, sizes []uint
 	
 	arguments := os.Args[1:] // arguments without program name
@@ -23,28 +21,26 @@ func main() {
 
 	inputFileName = arguments[0] // The JSON file we need to read
 
-	fileExt := filepath.Ext(inputFileName)
+	outputFileName, err = MakeOutputFileName(inputFileName)
 
-	if strings.Compare(fileExt, ".json") != 0 {
-		crash(errors.New("Please make sure the supplied file is a .json file"))
+	if err != nil {
+		crash(err)
 	}
 
-	outputFileName = fmt.Sprint(strings.TrimSuffix(inputFileName, fileExt), ".brk")
+	parsedData, err := DataFromFile(inputFileName)
 
-	parsedData, jsErr := DataFromFile(inputFileName)
-
-	if jsErr != nil {
-		crash(jsErr)
+	if err != nil {
+		crash(err)
 	}
 
-	convErr := ConvertToIntegers(parsedData.Colours, &colours)
+	err = ConvertToIntegers(parsedData.Colours, &colours)
 
+	if err != nil {
+		crash(err)
+	}
+	
 	for _, e := range parsedData.Sizes {
 		sizes = append(sizes, BrickLengths[e])
-	}
-
-	if convErr != nil {
-		crash(convErr)
 	}
 
 	bricks := GenerateDataSet(colours, sizes, parsedData.Amount)
