@@ -49,3 +49,32 @@ func MakeOutputFileName(inputFileName string) (string, error) {
 	
 	return fmt.Sprint(noSuffix, ".brk"), nil
 }
+
+func FileToDataSet(fname string) []Brick {
+	// var outputFileName string
+	var err error
+	var colours, sizes []uint
+	// outputFileName, err = MakeOutputFileName(fname)
+
+	if err != nil {
+		crash(err)
+	}
+
+	parsedData, err := DataFromFile(fname)
+
+	if err != nil {
+		crash(err)
+	}
+
+	err = ConvertToIntegers(parsedData.Colours, &colours)
+
+	if err != nil {
+		crash(err)
+	}
+	
+	for _, e := range parsedData.Sizes {
+		sizes = append(sizes, BrickLengths[e])
+	}
+
+	return GenerateDataSet(colours, sizes, parsedData.Amount)
+}
