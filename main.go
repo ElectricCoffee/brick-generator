@@ -9,7 +9,7 @@ import (			// comments there for personal reminder
 )
 
 const (
-	FirstArg = iota
+	FirstArg = iota		// note to self: iota achieves enum functionality
 	OFlag
 	OutputFile
 )
