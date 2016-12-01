@@ -20,14 +20,18 @@ func (b Brick) String() string {
 	return fmt.Sprintf("COL:%d LEN:%d\n", b.Colour, b.Size)
 }
 
-func FWriteDataSet(filename string, input []Brick) error {
+func SWriteDataSet(input []Brick) string {
 	strArr := make([]string, len(input))
 
 	for i, brick := range input {
 		strArr[i] = brick.String()
 	}
 
-	byteArr := []byte(strings.Join(strArr, ""))
+	return strings.Join(strArr, "")
+}
+
+func FWriteDataSet(filename string, input []Brick) error {
+	byteArr := []byte(SWriteDataSet(input))
 	// 0644 is the unix permission that sets -rw-r--r--
 	return ioutil.WriteFile(filename, byteArr , 0644)
 }
