@@ -14,6 +14,15 @@ const (
 	OutputFile
 )
 
+func PrintHelp() {
+	fmt.Println("Brick Dataset Generator ©2016 ElectricCoffee.")
+	fmt.Println("Usage:\n\n\tbrick-generator generator [-o output-file]\n")
+	fmt.Println("generator is a JSON file " +
+		"containing the required generator parameters.\n")
+	fmt.Println("-o output-file tells the program " +
+		"to output to the given file instead of stdout.")
+}
+
 func main() {
 	rand.Seed(time.Now().Unix())
 	arguments := os.Args[1:] // arguments without program name
@@ -29,12 +38,7 @@ func main() {
 		// if arg 1 is -h or --help, write the list of commands and an introduction
 		if strings.Compare(arg, "--help") == 0 ||
 			strings.Compare(arg, "-h") == 0 {
-			fmt.Println("Brick Dataset Generator ©2016 ElectricCoffee.")
-			fmt.Println("Usage:\n\n\tbrick-generator generator [-o output-file]\n")
-			fmt.Println("generator is a JSON file " +
-				"containing the required generator parameters.\n")
-			fmt.Println("-o output-file tells the program " +
-				"to output to the given file instead of stdout.")
+			PrintHelp()
 		} else {	// else write the file to stdout
 			dataSet := FileToDataSet(arg)
 			fmt.Println(SWriteDataSet(dataSet))
