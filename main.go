@@ -41,7 +41,7 @@ func main() {
 			PrintHelp()
 		} else {	// else write the file to stdout
 			dataSet := FileToDataSet(arg)
-			fmt.Println(SWriteDataSet(dataSet))
+			WriteDataSet(dataSet)
 		}
 		
 		return

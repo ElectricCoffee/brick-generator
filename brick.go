@@ -30,6 +30,10 @@ func SWriteDataSet(input []Brick) string {
 	return strings.Join(strArr, "")
 }
 
+func WriteDataSet(input []Brick) {
+	fmt.Println(SWriteDataSet(input))
+}
+
 func FWriteDataSet(filename string, input []Brick) error {
 	byteArr := []byte(SWriteDataSet(input))
 	// 0644 is the unix permission that sets -rw-r--r--
