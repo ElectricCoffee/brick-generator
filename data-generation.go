@@ -12,11 +12,12 @@ import (
 const (
 	Black = 0x000000
 	White = 0xFFFFFF
+	NumberOfBricks = 10
 )
 
 // BrickLengths uses the index as the length of a brick in studs,
 // the numbers are the average lengths of the bricks as measured by the machine
-var BrickLengths = [9]uint{0, 0, 3524, 5254, 6904, 8198, 10352, 12982, 14204}
+var BrickLengths = [NumberOfBricks + 1]uint{0, 854, 1850, 2718, 3610, 4492, 5520, 6520, 7496, 8288, 9140}
 
 // GenerateColours generates a sequence of pseudorandom colours between
 // black #000000, and white #FFFFFF.
