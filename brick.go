@@ -17,7 +17,7 @@ func NewBrick(colour, length uint) Brick {
 }
 
 func (b Brick) String() string {
-	return fmt.Sprintf("COL:%08d LEN:%08d\n", b.Colour, b.Size)
+	return fmt.Sprintf("COL:%08d LEN:%02d\n", b.Colour, b.Size)
 }
 // SWriteDataSet takes a dataset of type []Brick and
 // constructs a string in the format required by the output file
