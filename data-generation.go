@@ -15,10 +15,6 @@ const (
 	NumberOfBricks = 10
 )
 
-// BrickLengths uses the index as the length of a brick in studs,
-// the numbers are the average lengths of the bricks as measured by the machine
-var BrickLengths = [NumberOfBricks + 1]uint{0, 854, 1850, 2718, 3610, 4492, 5520, 6520, 7496, 8288, 9140}
-
 // GenerateColours generates a sequence of pseudorandom colours between
 // black #000000, and white #FFFFFF.
 func GenerateColours(number uint) []uint {
