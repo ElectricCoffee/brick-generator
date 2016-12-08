@@ -73,7 +73,7 @@ func FileToDataSet(fname string) []Brick {
 	}
 	
 	for _, e := range parsedData.Sizes {
-		sizes = append(sizes, BrickLengths[e])
+		sizes = append(sizes, e)
 	}
 
 	return GenerateDataSet(colours, sizes, parsedData.Amount)
