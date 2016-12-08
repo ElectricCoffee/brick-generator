@@ -28,13 +28,13 @@ func GenerateColours(number uint) []uint {
 	return result
 }
 
-// GenerateLengths generates a sequence of pseudorandom entries from the
-// BrickLengths array
-func GenerateLengths(number uint) []uint {
+// GenerateSizes generates a sequence of pseudorandom entries from the
+// BrickSizes array
+func GenerateSizes(number uint) []uint {
 	var result []uint
 	for i := uint(0); i < number; i++ {
-		l := uint(rand.Intn(8) + 1)
-		result = append(result, BrickLengths[l])
+		l := uint(rand.Intn(10) + 1)
+		result = append(result, l)
 	}
 
 	return result
@@ -67,40 +67,40 @@ func ScaleBrickSlice(brksPtr *[]Brick, maxLen uint) {
 	} // else do nothing
 }
 
-// FillInMissing generates additional colours or brick lengths if any of them are amiss.
-func FillInMissing(colours, lengths *[]uint, maxNum uint) {
+// FillInMissing generates additional colours or brick sizes if any of them are amiss.
+func FillInMissing(colours, sizes *[]uint, maxNum uint) {
 	noColours := len(*colours) == 0
-	noLengths := len(*lengths) == 0
+	noSizes := len(*sizes) == 0
 
 	calcSize := func (slice []uint) uint {
 		return maxNum / uint(len(slice))
 	}
 
-	if noColours && !noLengths {
-		colCard := calcSize(*lengths)
+	if noColours && !noSizes {
+		colCard := calcSize(*sizes)
 		*colours  = GenerateColours(colCard)
-	} else if !noColours && noLengths {
+	} else if !noColours && noSizes {
 		sizCard := calcSize(*colours)
-		*lengths  = GenerateLengths(sizCard)
-	} else if noColours && noLengths {
-		// if neither colours nor lengths are present,
+		*sizes  = GenerateSizes(sizCard)
+	} else if noColours && noSizes {
+		// if neither colours nor sizes are present,
 		// generate the root maxNum of each
 		cardinality := uint(math.Sqrt(float64(maxNum)))
 		*colours  = GenerateColours(cardinality)
-		*lengths  = GenerateLengths(cardinality)
+		*sizes  = GenerateSizes(cardinality)
 	}
 }
 
 // GenerateDataSet creates a sequence of bricks based on the input slices.
-// If either colours or lengths are empty, random values will be provided.
-func GenerateDataSet(colours, lengths []uint, maxNum uint) []Brick {
+// If either colours or sizes are empty, random values will be provided.
+func GenerateDataSet(colours, sizes []uint, maxNum uint) []Brick {
 	var bricks []Brick
 
-	FillInMissing(&colours, &lengths, maxNum)
+	FillInMissing(&colours, &sizes, maxNum)
 	
-	// generate cartesian product of colours and lengths
+	// generate cartesian product of colours and sizes
 	for _, colour := range colours {
-		for _, size := range lengths {
+		for _, size := range sizes {
 			bricks = append(bricks, NewBrick(colour, size))
 		}
 	}
